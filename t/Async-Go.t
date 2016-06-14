@@ -8,11 +8,17 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 3;
+use Test::Exception;
 BEGIN { use_ok('Async::Go') };
 
-#########################
+throws_ok { my $chan = make_chan(undef,0) }
+    qr/^Async::Go::Channel::Array does not support unbuffered channels. Specify capacity > 0./,
+    'Cannot create unbuffered channels';
 
-# Insert your test code below, the Test::More module is use()ed here so read
-# its man page ( perldoc Test::More ) for help writing this test script.
-
+{
+    my $chan = make_chan(undef,1);
+    $chan->put('foo');
+    my $read = $chan->get();
+    is($read,'foo');
+}

@@ -4,6 +4,8 @@ use 5.020002;
 use strict;
 use warnings;
 
+use Async::Go::Channel::Array;
+
 require Exporter;
 
 our @ISA = qw(Exporter);
@@ -16,19 +18,20 @@ our @ISA = qw(Exporter);
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 our %EXPORT_TAGS = ( 'all' => [ qw(
-	
+
 ) ] );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw(
-	
+    make_chan
 );
 
 our $VERSION = '0.01';
 
-
-# Preloaded methods go here.
+sub make_chan {
+    return Async::Go::Channel::Array->new( @_ );
+}
 
 1;
 __END__
